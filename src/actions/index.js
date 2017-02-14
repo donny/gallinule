@@ -1,19 +1,19 @@
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 export const SELECT_REDDIT = 'SELECT_REDDIT'
 export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT'
+export const REQUEST_POSTS = 'REQUEST_POSTS'
+export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 
-export const selectReddit = reddit => ({
+export const selectReddit = (reddit) => ({
   type: SELECT_REDDIT,
   reddit
 })
 
-export const invalidateReddit = reddit => ({
+export const invalidateReddit = (reddit) => ({
   type: INVALIDATE_REDDIT,
   reddit
 })
 
-export const requestPosts = reddit => ({
+export const requestPosts = (reddit) => ({
   type: REQUEST_POSTS,
   reddit
 })
@@ -25,7 +25,8 @@ export const receivePosts = (reddit, json) => ({
   receivedAt: Date.now()
 })
 
-const fetchPosts = reddit => dispatch => {
+// A thunk action creator.
+const fetchPosts = (reddit) => (dispatch) => {
   dispatch(requestPosts(reddit))
   return fetch(`https://www.reddit.com/r/${reddit}.json`)
     .then(response => response.json())
@@ -43,7 +44,8 @@ const shouldFetchPosts = (state, reddit) => {
   return posts.didInvalidate
 }
 
-export const fetchPostsIfNeeded = reddit => (dispatch, getState) => {
+// A thunk action creator.
+export const fetchPostsIfNeeded = (reddit) => (dispatch, getState) => {
   if (shouldFetchPosts(getState(), reddit)) {
     return dispatch(fetchPosts(reddit))
   }

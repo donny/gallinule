@@ -25,11 +25,12 @@ class App extends Component {
     }
   }
 
-  handleChange = nextReddit => {
-    this.props.dispatch(selectReddit(nextReddit))
+  handleChange = (nextReddit) => {
+    const { dispatch } = this.props
+    dispatch(selectReddit(nextReddit))
   }
 
-  handleRefreshClick = e => {
+  handleRefreshClick = (e) => {
     e.preventDefault()
 
     const { dispatch, selectedReddit } = this.props
@@ -70,7 +71,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { selectedReddit, postsByReddit } = state
   const {
     isFetching,
@@ -89,4 +90,6 @@ const mapStateToProps = state => {
   }
 }
 
+// We omit `mapDispatchToProps` in `connect`.
+// The default implementation just injects `dispatch` into our component’s props.
 export default connect(mapStateToProps)(App)
