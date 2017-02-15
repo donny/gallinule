@@ -22,7 +22,7 @@ export const receiveReviews = (app, json) => ({
   type: RECEIVE_REVIEWS,
   app,
   reviews: json.feed.entry
-    .filter((entry, index) => index !== 0)
+    .filter((entry, index) => index !== 0) // The first entry is not a review.
     .map(child => child),
   receivedAt: Date.now()
 })
