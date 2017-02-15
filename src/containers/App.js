@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { selectApp, fetchReviewsIfNeeded, invalidateApp } from '../actions'
+import Header from '../components/Header'
+import A from '../components/A'
 import Picker from '../components/Picker'
 import Reviews from '../components/Reviews'
 import styled from 'styled-components';
@@ -54,23 +56,26 @@ class App extends Component {
     const isEmpty = reviews.length === 0
     return (
       <AppWrapper>
-        <Picker value={selectedApp}
-                onChange={this.handleChange}
-                options={AppleApps} />
-        <p>
-          {lastUpdated &&
-            <span>
-              Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
-              {' '}
-            </span>
-          }
-          {!isFetching &&
-            <a href="#"
-               onClick={this.handleRefreshClick}>
-              Refresh
-            </a>
-          }
-        </p>
+        <Header>
+          <Picker value={selectedApp}
+                  onChange={this.handleChange}
+                  options={AppleApps} />
+          <p>
+            {lastUpdated &&
+              <span>
+                Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
+                {' '}
+              </span>
+            }
+            {!isFetching &&
+              <A href="#"
+                 onClick={this.handleRefreshClick}>
+                Refresh
+              </A>
+            }
+          </p>
+        </Header>
+
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
