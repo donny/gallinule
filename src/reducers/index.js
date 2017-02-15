@@ -4,7 +4,7 @@ import {
   REQUEST_POSTS, RECEIVE_POSTS
 } from '../actions'
 
-const selectedReddit = (state = 'reactjs', action) => {
+const selectedReddit = (state = '404667893', action) => {
   switch (action.type) {
     case SELECT_REDDIT:
       return action.reddit

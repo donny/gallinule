@@ -21,14 +21,16 @@ export const requestPosts = (reddit) => ({
 export const receivePosts = (reddit, json) => ({
   type: RECEIVE_POSTS,
   reddit,
-  posts: json.data.children.map(child => child.data),
+  posts: json.feed.entry
+    .filter((entry, index) => index !== 0)
+    .map(child => child),
   receivedAt: Date.now()
 })
 
 // A thunk action creator.
 const fetchPosts = (reddit) => (dispatch) => {
   dispatch(requestPosts(reddit))
-  return fetch(`https://www.reddit.com/r/${reddit}.json`)
+  return fetch(`https://itunes.apple.com/au/rss/customerreviews/id=${reddit}/sortBy=mostRecent/json`)
     .then(response => response.json())
     .then(json => dispatch(receivePosts(reddit, json)))
 }
