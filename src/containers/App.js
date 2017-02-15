@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { selectApp, fetchReviewsIfNeeded, invalidateApp } from '../actions'
 import Picker from '../components/Picker'
-import Posts from '../components/Posts'
+import Reviews from '../components/Reviews'
 
 class App extends Component {
   static propTypes = {
@@ -63,7 +63,7 @@ class App extends Component {
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-              <Posts reviews={reviews} />
+              <Reviews reviews={reviews} />
             </div>
         }
       </div>
