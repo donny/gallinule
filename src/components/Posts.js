@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react'
 
-const Posts = ({posts}) => (
+const Posts = ({reviews}) => (
   <ul>
-    {posts.map((post, i) =>
-      <li key={i}>{post.author.name.label} : {post.title.label} : {post.content.label}</li>
+    {reviews.map((review, i) =>
+      <li key={i}>{review.author.name.label} : {review.title.label} : {review.content.label}</li>
     )}
   </ul>
 )
 
 Posts.propTypes = {
-  posts: PropTypes.array.isRequired
+  reviews: PropTypes.array.isRequired
 }
 
 export default Posts

@@ -1,54 +1,54 @@
-export const SELECT_REDDIT = 'SELECT_REDDIT'
-export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT'
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
+export const SELECT_APP = 'SELECT_APP'
+export const INVALIDATE_APP = 'INVALIDATE_APP'
+export const REQUEST_REVIEWS = 'REQUEST_REVIEWS'
+export const RECEIVE_REVIEWS = 'RECEIVE_REVIEWS'
 
-export const selectReddit = (reddit) => ({
-  type: SELECT_REDDIT,
-  reddit
+export const selectApp = (app) => ({
+  type: SELECT_APP,
+  app
 })
 
-export const invalidateReddit = (reddit) => ({
-  type: INVALIDATE_REDDIT,
-  reddit
+export const invalidateApp = (app) => ({
+  type: INVALIDATE_APP,
+  app
 })
 
-export const requestPosts = (reddit) => ({
-  type: REQUEST_POSTS,
-  reddit
+export const requestReviews = (app) => ({
+  type: REQUEST_REVIEWS,
+  app
 })
 
-export const receivePosts = (reddit, json) => ({
-  type: RECEIVE_POSTS,
-  reddit,
-  posts: json.feed.entry
+export const receiveReviews = (app, json) => ({
+  type: RECEIVE_REVIEWS,
+  app,
+  reviews: json.feed.entry
     .filter((entry, index) => index !== 0)
     .map(child => child),
   receivedAt: Date.now()
 })
 
 // A thunk action creator.
-const fetchPosts = (reddit) => (dispatch) => {
-  dispatch(requestPosts(reddit))
-  return fetch(`https://itunes.apple.com/au/rss/customerreviews/id=${reddit}/sortBy=mostRecent/json`)
+const fetchReviews = (app) => (dispatch) => {
+  dispatch(requestReviews(app))
+  return fetch(`https://itunes.apple.com/au/rss/customerreviews/id=${app}/sortBy=mostRecent/json`)
     .then(response => response.json())
-    .then(json => dispatch(receivePosts(reddit, json)))
+    .then(json => dispatch(receiveReviews(app, json)))
 }
 
-const shouldFetchPosts = (state, reddit) => {
-  const posts = state.postsByReddit[reddit]
-  if (!posts) {
+const shouldFetchReviews = (state, app) => {
+  const reviews = state.reviewsByApp[app]
+  if (!reviews) {
     return true
   }
-  if (posts.isFetching) {
+  if (reviews.isFetching) {
     return false
   }
-  return posts.didInvalidate
+  return reviews.didInvalidate
 }
 
 // A thunk action creator.
-export const fetchPostsIfNeeded = (reddit) => (dispatch, getState) => {
-  if (shouldFetchPosts(getState(), reddit)) {
-    return dispatch(fetchPosts(reddit))
+export const fetchReviewsIfNeeded = (app) => (dispatch, getState) => {
+  if (shouldFetchReviews(getState(), app)) {
+    return dispatch(fetchReviews(app))
   }
 }

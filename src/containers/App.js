@@ -1,49 +1,49 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { selectReddit, fetchPostsIfNeeded, invalidateReddit } from '../actions'
+import { selectApp, fetchReviewsIfNeeded, invalidateApp } from '../actions'
 import Picker from '../components/Picker'
 import Posts from '../components/Posts'
 
 class App extends Component {
   static propTypes = {
-    selectedReddit: PropTypes.string.isRequired,
-    posts: PropTypes.array.isRequired,
+    selectedApp: PropTypes.string.isRequired,
+    reviews: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
     lastUpdated: PropTypes.number,
     dispatch: PropTypes.func.isRequired
   }
 
   componentDidMount() {
-    const { dispatch, selectedReddit } = this.props
-    dispatch(fetchPostsIfNeeded(selectedReddit))
+    const { dispatch, selectedApp } = this.props
+    dispatch(fetchReviewsIfNeeded(selectedApp))
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedReddit !== this.props.selectedReddit) {
-      const { dispatch, selectedReddit } = nextProps
-      dispatch(fetchPostsIfNeeded(selectedReddit))
+    if (nextProps.selectedApp !== this.props.selectedApp) {
+      const { dispatch, selectedApp } = nextProps
+      dispatch(fetchReviewsIfNeeded(selectedApp))
     }
   }
 
-  handleChange = (nextReddit) => {
+  handleChange = (nextApp) => {
     const { dispatch } = this.props
-    dispatch(selectReddit(nextReddit))
+    dispatch(selectApp(nextApp))
   }
 
   handleRefreshClick = (e) => {
     e.preventDefault()
 
-    const { dispatch, selectedReddit } = this.props
-    dispatch(invalidateReddit(selectedReddit))
-    dispatch(fetchPostsIfNeeded(selectedReddit))
+    const { dispatch, selectedApp } = this.props
+    dispatch(invalidateApp(selectedApp))
+    dispatch(fetchReviewsIfNeeded(selectedApp))
   }
 
   render() {
-    const { selectedReddit, posts, isFetching, lastUpdated } = this.props
-    const isEmpty = posts.length === 0
+    const { selectedApp, reviews, isFetching, lastUpdated } = this.props
+    const isEmpty = reviews.length === 0
     return (
       <div>
-        <Picker value={selectedReddit}
+        <Picker value={selectedApp}
                 onChange={this.handleChange}
                 options={[ '404667893', '319908646' ]} />
         <p>
@@ -63,7 +63,7 @@ class App extends Component {
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-              <Posts posts={posts} />
+              <Posts reviews={reviews} />
             </div>
         }
       </div>
@@ -72,19 +72,19 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { selectedReddit, postsByReddit } = state
+  const { selectedApp, reviewsByApp } = state
   const {
     isFetching,
     lastUpdated,
-    items: posts
-  } = postsByReddit[selectedReddit] || {
+    items: reviews
+  } = reviewsByApp[selectedApp] || {
     isFetching: true,
     items: []
   }
 
   return {
-    selectedReddit,
-    posts,
+    selectedApp,
+    reviews,
     isFetching,
     lastUpdated
   }

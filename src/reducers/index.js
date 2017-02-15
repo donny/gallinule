@@ -1,41 +1,41 @@
 import { combineReducers } from 'redux'
 import {
-  SELECT_REDDIT, INVALIDATE_REDDIT,
-  REQUEST_POSTS, RECEIVE_POSTS
+  SELECT_APP, INVALIDATE_APP,
+  REQUEST_REVIEWS, RECEIVE_REVIEWS
 } from '../actions'
 
-const selectedReddit = (state = '404667893', action) => {
+const selectedApp = (state = '404667893', action) => {
   switch (action.type) {
-    case SELECT_REDDIT:
-      return action.reddit
+    case SELECT_APP:
+      return action.app
     default:
       return state
   }
 }
 
-const posts = (state = {
+const reviews = (state = {
   isFetching: false,
   didInvalidate: false,
   items: []
 }, action) => {
   switch (action.type) {
-    case INVALIDATE_REDDIT:
+    case INVALIDATE_APP:
       return {
         ...state,
         didInvalidate: true
       }
-    case REQUEST_POSTS:
+    case REQUEST_REVIEWS:
       return {
         ...state,
         isFetching: true,
         didInvalidate: false
       }
-    case RECEIVE_POSTS:
+    case RECEIVE_REVIEWS:
       return {
         ...state,
         isFetching: false,
         didInvalidate: false,
-        items: action.posts,
+        items: action.reviews,
         lastUpdated: action.receivedAt
       }
     default:
@@ -43,14 +43,14 @@ const posts = (state = {
   }
 }
 
-const postsByReddit = (state = { }, action) => {
+const reviewsByApp = (state = { }, action) => {
   switch (action.type) {
-    case INVALIDATE_REDDIT:
-    case RECEIVE_POSTS:
-    case REQUEST_POSTS:
+    case INVALIDATE_APP:
+    case RECEIVE_REVIEWS:
+    case REQUEST_REVIEWS:
       return {
         ...state,
-        [action.reddit]: posts(state[action.reddit], action)
+        [action.app]: reviews(state[action.app], action)
       }
     default:
       return state
@@ -58,8 +58,8 @@ const postsByReddit = (state = { }, action) => {
 }
 
 const rootReducer = combineReducers({
-  postsByReddit,
-  selectedReddit
+  reviewsByApp,
+  selectedApp
 })
 
 export default rootReducer
