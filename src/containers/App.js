@@ -3,6 +3,17 @@ import { connect } from 'react-redux'
 import { selectApp, fetchReviewsIfNeeded, invalidateApp } from '../actions'
 import Picker from '../components/Picker'
 import Reviews from '../components/Reviews'
+import styled from 'styled-components';
+
+const AppleApps = [ {name: 'Realestate', id:'404667893'},
+                    {name: 'Domain', id:'319908646'} ]
+
+const AppWrapper = styled.div`
+  max-width: calc(768px + 16px * 2);
+  margin: 0 auto;
+  min-height: 100%;
+  padding: 0 16px;
+`
 
 class App extends Component {
   static propTypes = {
@@ -42,10 +53,10 @@ class App extends Component {
     const { selectedApp, reviews, isFetching, lastUpdated } = this.props
     const isEmpty = reviews.length === 0
     return (
-      <div>
+      <AppWrapper>
         <Picker value={selectedApp}
                 onChange={this.handleChange}
-                options={[ '404667893', '319908646' ]} />
+                options={AppleApps} />
         <p>
           {lastUpdated &&
             <span>
@@ -66,7 +77,7 @@ class App extends Component {
               <Reviews reviews={reviews} />
             </div>
         }
-      </div>
+      </AppWrapper>
     )
   }
 }
