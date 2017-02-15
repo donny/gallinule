@@ -63,8 +63,8 @@ class App extends Component {
           <p>
             {lastUpdated &&
               <span>
-                Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
-                {' '}
+                Last updated at {new Date(lastUpdated).toLocaleTimeString()}
+                {' - '}
               </span>
             }
             {!isFetching &&

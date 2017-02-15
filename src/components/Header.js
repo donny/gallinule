@@ -3,10 +3,11 @@ import styled from 'styled-components';
 
 const HeaderWrapper = styled.div`
   text-align: center;
-  background-color: #222;
+  background-color: slategray;
   height: 140px;
-  padding: 20px;
+  padding: 15px;
   color: white;
+  border-radius: 5px;
 `
 
 class Header extends Component {
