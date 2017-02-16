@@ -9,7 +9,11 @@ import Reviews from '../components/Reviews'
 import styled from 'styled-components';
 
 const AppleApps = [ {name: 'Realestate', id:'404667893'},
-                    {name: 'Domain', id:'319908646'} ]
+                    {name: 'Domain', id:'319908646'},
+                    {name: 'Homely', id: '1004229463'},
+                    {name: 'realestateView', id: '474698182'},
+                    {name: 'All Homes', id: '499208265'}
+                  ]
 
 const AppWrapper = styled.div`
   max-width: calc(768px + 16px * 2);
