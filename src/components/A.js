@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const A = styled.a`
-  color: white;
+  color: silver;
 
   &:hover {
     color: powderblue;

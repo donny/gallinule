@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { selectApp, fetchReviewsIfNeeded, invalidateApp } from '../actions'
 import Header from '../components/Header'
+import Footer from '../components/Footer'
 import A from '../components/A'
 import Picker from '../components/Picker'
 import Reviews from '../components/Reviews'
@@ -27,6 +28,8 @@ class App extends Component {
   }
 
   componentDidMount() {
+    document.title = "App Reviews"
+
     const { dispatch, selectedApp } = this.props
     dispatch(fetchReviewsIfNeeded(selectedApp))
   }
@@ -82,6 +85,8 @@ class App extends Component {
               <Reviews reviews={reviews} />
             </div>
         }
+
+        <Footer/>
       </AppWrapper>
     )
   }
